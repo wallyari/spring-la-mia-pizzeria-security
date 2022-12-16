@@ -15,7 +15,7 @@
 
 	<div class="container p-3 text-center">
 		<div class="d-flex col-12 justify-content-center mb-5">
-			<a th:href="@{/pizza/create}" class="btn btn-danger text-uppercase">
+			<a href="admin/create" class="btn btn-danger text-uppercase">
 			Create New Pizza</a>
 		</div>	
 	<table th:if="${!pizzas.isEmpty()}" class="table">
@@ -34,9 +34,9 @@
 			<td th:text="*{promozione}"></td>
 			<td th:text="*{ingredienti}"></td>
 			<td>
-				<a th:href="@{/pizza/{id}(id=${pizza.id})}" class="btn btn-success text-uppercase"><i class="fa-solid fa-eye"></i></a>
-				<a th:href="@{/pizza/update/{id}(id=${pizza.id})}" class="btn btn-primary btn-small text-uppercase"><i class="fa-solid fa-pen-to-square"></i></a>
-				<a th:href="@{/pizza/delete/{id} (id=*{id})}" class="btn btn-danger btn-small text-uppercase"><i class="fa-solid fa-trash"></i></a>
+				<a th:href="@{user/{id}(id=${pizza.id})}" class="btn btn-success text-uppercase"><i class="fa-solid fa-eye"></i></a>
+				<a th:href="@{admin/update/{id}(id=${pizza.id})}" class="btn btn-primary btn-small text-uppercase"><i class="fa-solid fa-pen-to-square"></i></a>
+				<a th:href="@{admin/delete/{id}(id=${pizza.id})}" class="btn btn-danger btn-small text-uppercase"><i class="fa-solid fa-trash"></i></a>
 			</td>
 		</tr>
 	</table>

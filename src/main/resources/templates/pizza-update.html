@@ -15,7 +15,7 @@
 		  	
 		  	<form class="container border mt-5 p-3" 
 		 			method="POST" 
-		 			action="/pizza/store" 
+		 			th:action="@{/pizza/admin/update}"
 		 			th:object="${pizza}">
 		 			<!--th:field aggancia le proprietà agli input corrispondenti-->
 		 			<input type="number" name="id" th:field="*{id}" class="d-none">

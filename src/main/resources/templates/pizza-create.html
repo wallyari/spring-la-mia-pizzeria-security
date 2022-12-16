@@ -15,7 +15,7 @@
 	  		
 	  		<form class="container border mt-3 p-3" 
 	 			  method="POST" 
-	 			  action="/pizza/create" 
+	 			  th:action="@{/pizza/admin/create}"
 	 			  th:object="${pizza}" >
 	 			  <div class="mb-3">
  				<label class="form-label">Nome:</label>

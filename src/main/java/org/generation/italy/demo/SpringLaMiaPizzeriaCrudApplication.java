@@ -2,16 +2,22 @@ package org.generation.italy.demo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.generation.italy.demo.pojo.Drink;
 import org.generation.italy.demo.pojo.Ingrediente;
 import org.generation.italy.demo.pojo.Pizza;
 import org.generation.italy.demo.pojo.Promozione;
+import org.generation.italy.demo.pojo.Role;
+import org.generation.italy.demo.pojo.User;
 import org.generation.italy.demo.serv.DrinkService;
 import org.generation.italy.demo.serv.IngredienteService;
 import org.generation.italy.demo.serv.PizzaService;
 import org.generation.italy.demo.serv.PromozioneService;
+import org.generation.italy.demo.serv.RoleService;
+import org.generation.italy.demo.serv.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +38,12 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	@Autowired
 	private IngredienteService ingredienteService;
 	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserService userService;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
 	}
@@ -39,6 +51,31 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+		
+		Role userRole = new Role("USER");
+		Role adminRole = new Role("ADMIN");
+		
+		roleService.save(userRole);
+		roleService.save(adminRole);
+		
+		User userUser = new User("user", "{noop}userp", userRole);
+		User adminUser = new User("admin", "{noop}adminp", adminRole);
+		
+		Set<Role>userAdminRoles = new HashSet<>();
+		userAdminRoles.add(userRole);
+		userAdminRoles.add(adminRole);
+		User userAdminUser = new User("useradmin", "{noop}useradmin", userAdminRoles);
+		
+		userService.save(userUser);
+		userService.save(adminUser);
+		userService.save(userAdminUser);
+		
+		
+		
+		
+		
+		
+		//------------------------------------------------------------//
 		
 		Promozione promo1 = new Promozione(LocalDate.parse("2022-10-12"), LocalDate.parse("2022-11-12"), "Promo attuale");
 		Promozione promo2 = new Promozione(LocalDate.parse("2023-10-01"), LocalDate.parse("2023-01-09"), "Promo futura");

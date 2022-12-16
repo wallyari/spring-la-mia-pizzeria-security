@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/pizza")
 public class PizzaController {
 	
 	@Autowired
@@ -37,8 +37,8 @@ public class PizzaController {
 	private IngredienteService ingredienteService;
 	
 	
-	//@GetMapping("/")
-	@GetMapping("/pizza/index")
+
+	@GetMapping("/user")
 	public String index(Model model) {
 	
 	List<Pizza> pizzas = pizzaService.findAll();
@@ -47,7 +47,7 @@ public class PizzaController {
 	return "index";
 	}
 
-	@GetMapping("/pizza/{id}")
+	@GetMapping("/user/{id}")
 	public String getPizza(@PathVariable("id") int id, Model model) {
 		
 		Optional <Pizza> optPizza = pizzaService.getPizzaById(id);
@@ -61,7 +61,7 @@ public class PizzaController {
 		
 	}
 	
-	@GetMapping("/pizza/create")
+	@GetMapping("/admin/create")
 	public String createPizza(Model model) {
 		
 		List<Ingrediente> ingredienti = ingredienteService.findAll();
@@ -76,14 +76,14 @@ public class PizzaController {
 		return "pizza-create";
 	}
 	
-	@PostMapping ("/pizza/create")
+	@PostMapping ("/admin/create")
 
  	public String storePizza(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 		if(bindingResult.hasErrors()) {
  			
  			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());			
- 			return "redirect:/pizza/create";
+ 			return "redirect:/pizza/user";
  		}
 
  		try {			
@@ -101,7 +101,7 @@ public class PizzaController {
 	}
 
 	
-	@GetMapping ("/pizza/update/{id}")
+	@GetMapping ("/admin/update/{id}")
 	public String getEditPizza(@PathVariable("id") int id, Model model) {
 		
 		Optional <Pizza> optPizza = pizzaService.getPizzaById(id);
@@ -117,7 +117,7 @@ public class PizzaController {
 		return "pizza-update";
 	}
 	
-	@PostMapping("/pizza/store")
+	@PostMapping("/admin/update")
 	public String updatePizza(@Valid @ModelAttribute("pizza") Pizza pizza,  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 		if(bindingResult.hasErrors()) {
@@ -134,24 +134,22 @@ public class PizzaController {
  			final String msg = e.getMessage(); 			
  			System.err.println(msg);			
  			redirectAttributes.addFlashAttribute("catchError", msg);			
- 			return "redirect:/pizza/create";
+ 			return "redirect:/pizza/user";
  		}
 		
 		return "redirect:/";
 	}
 	
-	@GetMapping("/pizza/delete/{id}")
+	@GetMapping("/admin/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 		
-		//Optional<Pizza> optPizza = pizzaService.getPizzaById(id);
-		//Pizza pizza = optPizza.get();
 		
 		pizzaService.deletePizzaById(id);
 		
-		return "redirect:/";
+		return "redirect:/pizza/user";
 	}
 	
-	@GetMapping("/pizza/search")
+	@GetMapping("/user/search")
 	public String getSearchPizzaByName(Model model,
 			@RequestParam(name = "q", required=false)String query) {
 				
